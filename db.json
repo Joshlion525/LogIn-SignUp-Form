@@ -2,7 +2,7 @@
   "newUser": [
     {
       "id": "f64c",
-      "name": "olu adebanjo",
+      "name": "Olumuyiwa Adebanjo",
       "mail": "olumhg@gmail.com",
       "number": "0987654321"
     },
@@ -11,12 +11,6 @@
       "name": " Emmanuel Odior",
       "mail": "emma+2@gmail.com",
       "number": "12345676890"
-    },
-    {
-      "id": "d56e",
-      "name": "Joshua Adebanjo",
-      "mail": "joshlion525@gmail.com",
-      "number": "08163146287"
     }
   ]
 }

@@ -10,7 +10,7 @@ const Lists = () => {
 
 	const getUsers = async () => {
 		try {
-			const response = await axios.get("http://localhost:4000/newUser");
+			const response = await axios.get("http://localhost:3000/users");
 			setNewUsers(response.data);
 		} catch (error) {
 			console.log(error);
@@ -23,7 +23,6 @@ const Lists = () => {
 
 	const deleteUser = async (id) => {
 		try {
-			// setNewUsers(newUsers.filter((n) => n.id !== id));
 			const response = await axios.delete(
 				`http://localhost:4000/newUser/${id}`
 			);
@@ -44,7 +43,6 @@ const Lists = () => {
 			<table className="table-auto min-w-full">
 				<thead>
 					<tr>
-						<th className="px-4 py-2">ID</th>
 						<th className="px-4 py-2">Name</th>
 						<th className="px-4 py-2">Email</th>
 						<th className="px-4 py-2">Phone Number</th>
@@ -54,18 +52,15 @@ const Lists = () => {
 				<tbody>
 					{newUsers &&
 						newUsers.map((newUser) => (
-							<tr key={newUser.id}>
+							<tr key={newUser._id}>
 								<td className="border px-4 py-2">
-									{newUser.id}
+									{newUser.fullname}
 								</td>
 								<td className="border px-4 py-2">
-									{newUser.name}
+									{newUser.email}
 								</td>
 								<td className="border px-4 py-2">
-									{newUser.mail}
-								</td>
-								<td className="border px-4 py-2">
-									{newUser.number}
+									{newUser.password}
 								</td>
 								<td className="border px-4 py-2">
 									<button
