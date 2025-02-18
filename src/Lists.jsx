@@ -24,7 +24,7 @@ const Lists = () => {
 	const deleteUser = async (id) => {
 		try {
 			const response = await axios.delete(
-				`http://localhost:4000/newUser/${id}`
+				`http://localhost:3000/users/${id}`
 			);
 			if (response.status === 200) {
 				toast.success("Contact deleted successfully");
@@ -65,14 +65,14 @@ const Lists = () => {
 								<td className="border px-4 py-2">
 									<button
 										className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-										onClick={() => deleteUser(newUser.id)}
+										onClick={() => deleteUser(newUser._id)}
 									>
 										Delete
 									</button>
 									<button
 										className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ml-2"
 										onClick={() =>
-											navigate(`/update/${newUser.id}`)
+											navigate(`/update/${newUser._id}`)
 										}
 									>
 										Edit

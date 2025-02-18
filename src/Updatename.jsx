@@ -6,12 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 const Updatename = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const api = "http://localhost:4000/newUser";
+	const api = "http://localhost:3000/users";
 
 	const [lists, setLists] = useState({
-		name: "",
-		mail: "",
-		number: "",
+		fullname: "",
+		email: "",
+		password: "",
 	});
 
 	useEffect(() => {
@@ -37,9 +37,9 @@ const Updatename = () => {
 				toast.success("contact edited successfully");
 			}
             setLists({
-				name: "",
-				mail: "",
-				number: "",
+				fullname: "",
+				email: "",
+				password: "",
 			});
 			setTimeout(() => {
 				return navigate("/lists");
@@ -65,7 +65,7 @@ const Updatename = () => {
 					className="border border-blue-400 outline-blue-700 px-2 h-12 rounded-lg"
 					id="fullname"
 					name="name"
-					value={lists.name}
+					value={lists.fullname}
 					onChange={handleChange}
 				/>
 			</div>
@@ -76,7 +76,7 @@ const Updatename = () => {
 					className="border border-blue-400 outline-blue-700 px-2 h-12 rounded-lg"
 					id="email"
 					name="mail"
-					value={lists.mail}
+					value={lists.email}
 					onChange={handleChange}
 				/>
 			</div>
@@ -87,7 +87,7 @@ const Updatename = () => {
 					className="border border-blue-400 outline-blue-700 px-2 h-12 rounded-lg"
 					id="phonenumber"
 					name="number"
-					value={lists.number}
+					value={lists.password}
 					onChange={handleChange}
 				/>
 			</div>
