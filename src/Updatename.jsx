@@ -11,91 +11,87 @@ const Updatename = () => {
 	const [lists, setLists] = useState({
 		fullname: "",
 		email: "",
-		password: "",
 	});
+
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const getList = async () => {
-			const { data } = await axios.get(api + "/" + id);
-			setLists(data);
+			try {
+				const { data } = await axios.get(`${api}/${id}`);
+				setLists(data);
+			} catch (error) {
+				console.error("Error fetching user:", error);
+				toast.error("Failed to load user data");
+			}
 		};
-		getList();
-	}, []);
+		if (id) getList();
+	}, [id]);
 
 	const handleChange = (e) => {
-		const listsUpdate = { ...lists };
-		listsUpdate[e.target.name] = e.target.value;
-		setLists(listsUpdate);
+		setLists({ ...lists, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setLoading(true);
 
 		try {
-			const response = await axios.put(api + "/" + id, lists);
+			const response = await axios.patch(`${api}/${id}`, lists);
 			if (response.status === 200) {
-				toast.success("contact edited successfully");
+				toast.success("Contact edited successfully");
+				setTimeout(() => navigate("/lists"), 1000);
 			}
-            setLists({
-				fullname: "",
-				email: "",
-				password: "",
-			});
-			setTimeout(() => {
-				return navigate("/lists");
-			}, 1000);
 		} catch (error) {
-			console.log(error);
+			console.error("Error updating user:", error);
+			toast.error("Failed to update user");
+		} finally {
+			setLoading(false);
 		}
 	};
 
 	return (
 		<form
-			action=""
 			className="border border-blue-400 rounded-md w-[30%] mx-auto my-20 h-auto p-5"
+			onSubmit={handleSubmit}
 		>
 			<Toaster position="top-right" />
 			<h1 className="font-bold text-2xl text-center my-5">
 				Edit your details
 			</h1>
-			<div className="flex flex-col  gap-2 my-2">
+
+			<div className="flex flex-col gap-2 my-2">
 				<label htmlFor="fullname">Fullname</label>
 				<input
 					type="text"
 					className="border border-blue-400 outline-blue-700 px-2 h-12 rounded-lg"
 					id="fullname"
-					name="name"
+					name="fullname"
 					value={lists.fullname}
 					onChange={handleChange}
+					required
 				/>
 			</div>
-			<div className="flex flex-col  gap-2 my-2">
+
+			<div className="flex flex-col gap-2 my-2">
 				<label htmlFor="email">Email</label>
 				<input
 					type="email"
 					className="border border-blue-400 outline-blue-700 px-2 h-12 rounded-lg"
 					id="email"
-					name="mail"
+					name="email"
 					value={lists.email}
 					onChange={handleChange}
+					required
 				/>
 			</div>
-			<div className="flex flex-col  gap-2 my-2">
-				<label htmlFor="phonenumber">Phone Number</label>
-				<input
-					type="number"
-					className="border border-blue-400 outline-blue-700 px-2 h-12 rounded-lg"
-					id="phonenumber"
-					name="number"
-					value={lists.password}
-					onChange={handleChange}
-				/>
-			</div>
+
 			<button
-				className="bg-blue-700 text-white rounded-md py-3 px-6 w-40 my-4"
-				onClick={handleSubmit}
+				type="submit"
+				className="bg-blue-700 text-white rounded-md py-3 px-6 w-40 my-4 disabled:bg-blue-400"
+				disabled={loading}
 			>
-				Update
+				{loading ? "Updating..." : "Update"}
 			</button>
 		</form>
 	);
